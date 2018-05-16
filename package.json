@@ -1,0 +1,28 @@
+{
+  "name": "dogenald-trump",
+  "version": "1.0.0",
+  "description": "Auto-tweeter that converts trump tweets into doge tweets.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dexo568/dogenald-trump.git"
+  },
+  "keywords": [
+    "doge",
+    "trump",
+    "twitter"
+  ],
+  "author": "dexo568",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dexo568/dogenald-trump/issues"
+  },
+  "homepage": "https://github.com/dexo568/dogenald-trump#readme",
+  "dependencies": {
+    "dotenv": "^5.0.1",
+    "twitter": "^1.7.1"
+  }
+}

@@ -1,5 +1,6 @@
 
 var Twitter = require('twitter');
+var shibe = require('./shibe.js');
 require('dotenv').config();
 
 var client = new Twitter({
@@ -27,7 +28,11 @@ function getRealTrumpTweets(callback){
 }
 
 function convertToDoge(tweet){
+	var shibeVersion = shibe.createShibeFromText(tweet.full_text.replace('&amp;','&'));
 	console.log(tweet.full_text);
+	console.log("->");
+	console.log(shibeVersion);
+	console.log("------");
 }
 
 getRealTrumpTweets(convertToDoge);

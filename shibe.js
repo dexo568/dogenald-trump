@@ -231,7 +231,7 @@ var getPhrases = function(){
 	return phrases;
 };
 var getBlacklist = function(){
-	return ["such", "very"];
+	return ["such", "very", "much", "theyre"];
 };
 var getRandomPhrase = function(words, phrases){
 	var chosenPhrase = phrases[parseInt(Math.random() * phrases.length)];
@@ -253,6 +253,7 @@ var getRandomPhrase = function(words, phrases){
 	return chosenPhrase;
 };
 var createShibe = function(words, phrases){
+	console.log(words);
 	wordBank = words;
 	var output = "";
 
@@ -260,14 +261,14 @@ var createShibe = function(words, phrases){
 	phraseDensity = .5;
 	blankChance = .1;
 
-	for(var line = 0; line < 3; line++){
+	for(var line = 0; line < 5; line++){
 		if(Math.random() < blankChance){
 			//blank line
 			output += "    \n";
 		} else{
 			var len = 4;
 			output += "    ";
-			while(len < 78){
+			while(len < 50){
 				var rand = Math.random();
 				var toWrite = "";
 				if(rand < phraseDensity){
@@ -275,7 +276,7 @@ var createShibe = function(words, phrases){
 				} else if(rand < wow + phraseDensity){
 					toWrite = "wow"
 				}
-				if(len + toWrite.length < 78){
+				if(len + toWrite.length < 50){
 					output += toWrite;
 					len += toWrite.length;
 				}

@@ -16,7 +16,8 @@ function getRealTrumpTweets(callback){
 	var params = {
 		screen_name: 'realDonaldTrump',
 		exclude_replies: true,
-		tweet_mode: 'extended'
+		tweet_mode: 'extended',
+		count: 5
 	};
 	if(lastID != null){
 		params.since_id = lastID;
@@ -27,13 +28,12 @@ function getRealTrumpTweets(callback){
 			console.log(error);
 		}
 		if(tweets.length > 0){
-			lastID = tweets[0].id;
+			lastID = tweets[0].id_str;
 				for(tweet of tweets){
 				console.log(tweet);
 				//strip URLs, not useful for dogefying
 				tweet.full_text = tweet.full_text.replace(/http[^\s]*/g, '');
 				callback(tweet);
-				return;
 			}
 		}
 	})
@@ -62,6 +62,6 @@ function convertToDoge(tweet){
 	})
 }
 
-//setInterval(function(){
+setInterval(function(){
 	getRealTrumpTweets(convertToDoge);
-//}, 6000);
+}, 6000);

@@ -253,7 +253,6 @@ var getRandomPhrase = function(words, phrases){
 	return chosenPhrase;
 };
 var createShibe = function(words, phrases){
-	console.log(words);
 	wordBank = words;
 	var output = "";
 

@@ -13,3 +13,5 @@ CONSUMER_KEY=
 CONSUMER_SECRET=
 ```
 You can get these values for your own twitter account by making a twitter API appliction [here](https://apps.twitter.com/).
+
+Then, run with `npm start`.

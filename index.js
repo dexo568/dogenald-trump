@@ -74,6 +74,6 @@ function convertToDoge(tweet){
 
 }
 
-//setInterval(function(){
+setInterval(function(){
 	getRealTrumpTweets(convertToDoge);
-//}, 30000);
+}, 30000);

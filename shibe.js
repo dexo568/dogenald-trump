@@ -219,7 +219,7 @@ var sortWords = function(taggedWords){
 	return wordList;
 };
 var getPhrases = function(){
-	var phrases = ["such [NN]", "so much [NN]", "such [VBG]","many [NNS]", "very [RB]", "such [VB]", "very [VBN]", "very [VBG]", "such [NNP]", "very [JJ]", "so [JJ]", "much [JJ]", "much [JJR]", "wow", ""];
+	var phrases = ["such [NN]", "so much [NN]", "such [VBG]","many [NNS]", "very [RB]", "such [VB]", "very [VBN]", "very [VBG]", "such [NNP]", "very [JJ]", "so [JJ]", "much [JJ]", "much [JJR]"];
 	var i = phrases.length;
 	for(var k = 0; k < i; k++){
 		while(phrases[k][0] === '*'){
@@ -235,15 +235,26 @@ var getBlacklist = function(){
 	return ["such", "very", "much", "theyre", "many"];
 };
 var getRandomPhrase = function(words, phrases){
+	//console.log(phrases);
+	phrases = phrases.slice(0);
+	if(phrases.length == 0){
+		return "wow";
+	}
 	var needsAllCaps = false;
-	var chosenPhrase = phrases[parseInt(Math.random() * phrases.length)];
+	var chosenPhraseIndex = parseInt(Math.random() * phrases.length);
+	var chosenPhrase = phrases[chosenPhraseIndex];
 	chosenPhrase = chosenPhrase.replace(/\[(.*)\]/g, function(match){
 		match = match.replace(/[\[\]]/g, '').toUpperCase();
 		if(wordBank[match]){
+			//console.log(match + ":");
+			//console.log(wordBank[match]);
 			var tagwords = Object.keys(wordBank[match]);
+			//console.log(tagwords);
 			var outputIndex = parseInt(Math.random() * tagwords.length);
+			//console.log(outputIndex);
 			var output = tagwords[outputIndex];
-			if(tweetText.indexOf(output) == -1){
+			//console.log(output);
+			if(tweetText.toLowerCase().indexOf(output) == -1){
 				return undefined;
 			}
 			if(output == undefined){
@@ -254,12 +265,14 @@ var getRandomPhrase = function(words, phrases){
 			}
 
 			delete wordBank[match][output];
+			console.log(wordBank[match]);
 			return output;
 		} else{
 			return match;
 		}
 	});
 	if(chosenPhrase.includes("undefined")){
+		phrases.splice(chosenPhraseIndex, 1);
 		return getRandomPhrase(words, phrases);
 	}
 	if(needsAllCaps && chosenPhrase != "wow"){
@@ -269,9 +282,10 @@ var getRandomPhrase = function(words, phrases){
 };
 var createShibe = function(words, phrases){
 	wordBank = words;
+	//console.log(wordBank);
 	var output = "";
 
-	wow = .01;
+	wow = .05;
 	phraseDensity = .5;
 	blankChance = .1;
 

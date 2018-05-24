@@ -10,7 +10,7 @@ var client = new Twitter({
   access_token_secret: process.env.ACCESS_TOKEN_SECRET
 });
 
-var lastID = '999629710370983937';
+var lastID = '999695988813189120';
 
 function getRealTrumpTweets(callback){
 	var params = {
@@ -25,7 +25,7 @@ function getRealTrumpTweets(callback){
 	console.log(params);
 	client.get('/statuses/user_timeline', params, function(error, tweets, response){
 		if(error){
-			console.log("Attempting to get real trump twets encountered error:");
+			console.log("Attempting to get real trump tweets encountered error:");
 			console.log(error);
 		}
 		console.log(tweets.length);
@@ -74,6 +74,6 @@ function convertToDoge(tweet){
 
 }
 
-setInterval(function(){
+//setInterval(function(){
 	getRealTrumpTweets(convertToDoge);
-}, 30000);
+//}, 30000);

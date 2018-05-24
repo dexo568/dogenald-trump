@@ -3,6 +3,7 @@
 // var tagger = require('./POSTagger.js');
 
 var wordBank = null;
+var tweetText = "";
 
 function LexerNode(string, regex, regexs){
 	this.string = string;
@@ -218,7 +219,7 @@ var sortWords = function(taggedWords){
 	return wordList;
 };
 var getPhrases = function(){
-	var phrases = ["such [NN]", "so much [NN]", "such [VBG]","many [NNS]", "very [VBN]", "such [NNP]", "very [JJ]", "so [JJ]", "much [JJ]", "wow", ""];
+	var phrases = ["such [NN]", "so much [NN]", "such [VBG]","many [NNS]", "very [RB]", "such [VB]", "very [VBN]", "very [VBG]", "such [NNP]", "very [JJ]", "so [JJ]", "much [JJ]", "much [JJR]", "wow", ""];
 	var i = phrases.length;
 	for(var k = 0; k < i; k++){
 		while(phrases[k][0] === '*'){
@@ -231,9 +232,10 @@ var getPhrases = function(){
 	return phrases;
 };
 var getBlacklist = function(){
-	return ["such", "very", "much", "theyre"];
+	return ["such", "very", "much", "theyre", "many"];
 };
 var getRandomPhrase = function(words, phrases){
+	var needsAllCaps = false;
 	var chosenPhrase = phrases[parseInt(Math.random() * phrases.length)];
 	chosenPhrase = chosenPhrase.replace(/\[(.*)\]/g, function(match){
 		match = match.replace(/[\[\]]/g, '').toUpperCase();
@@ -241,6 +243,16 @@ var getRandomPhrase = function(words, phrases){
 			var tagwords = Object.keys(wordBank[match]);
 			var outputIndex = parseInt(Math.random() * tagwords.length);
 			var output = tagwords[outputIndex];
+			if(tweetText.indexOf(output) == -1){
+				return undefined;
+			}
+			if(output == undefined){
+				return undefined;
+			}
+			if(tweetText.includes(output.toUpperCase())){
+				needsAllCaps = true;
+			}
+
 			delete wordBank[match][output];
 			return output;
 		} else{
@@ -249,6 +261,9 @@ var getRandomPhrase = function(words, phrases){
 	});
 	if(chosenPhrase.includes("undefined")){
 		return getRandomPhrase(words, phrases);
+	}
+	if(needsAllCaps && chosenPhrase != "wow"){
+		return chosenPhrase.toUpperCase();
 	}
 	return chosenPhrase;
 };
@@ -292,6 +307,8 @@ var createShibe = function(words, phrases){
 };
 
 var createShibeFromText = function(text){
+	tweetText = text;
+	console.log(tweetText);
 	return createShibe(sortWords(lexWords(text)), getPhrases())	
 }
 

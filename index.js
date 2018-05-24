@@ -10,7 +10,7 @@ var client = new Twitter({
   access_token_secret: process.env.ACCESS_TOKEN_SECRET
 });
 
-var lastID = '998704493335334912';
+var lastID = '999629710370983937';
 
 function getRealTrumpTweets(callback){
 	var params = {
